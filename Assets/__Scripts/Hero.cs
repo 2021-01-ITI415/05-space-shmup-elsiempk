@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Hero : MonoBehaviour {
     static public Hero S; // Singleton
@@ -48,22 +49,26 @@ public class Hero : MonoBehaviour {
 	void Update()
     {
         // Pull in information from the Input class
-        float xAxis = Input.GetAxis("Horizontal");
-        float yAxis = Input.GetAxis("Vertical");
+        //float xAxis = Input.GetAxis("Horizontal");
+        //float yAxis = Input.GetAxis("Vertical");
 
         // Change transform.position based on the axes
-        Vector3 pos = transform.position;
-        pos.x += xAxis * speed * Time.deltaTime;
-        pos.y += yAxis * speed * Time.deltaTime;
-        transform.position = pos;
+        //Vector3 pos = transform.position;
+        // pos.x += xAxis * speed * Time.deltaTime;
+        //pos.y += yAxis * speed * Time.deltaTime;
+        //transform.position = pos;
 
         // Rotate the ship to make it feel more dynamic
-        transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
+        // transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
 
         // Use the fireDelegate to fire Weapons
         // First, make sure the button is pressed: Axis("Jump")
         // Then ensure that fireDelegate isn't null to avoid an error
-        if (Input.GetAxis("Jump") == 1 && fireDelegate != null)
+        // if (Input.GetAxis("Jump") == 1 && fireDelegate != null)
+        // {
+        //     fireDelegate();
+        // }
+        if (Keyboard.current.spaceKey.isPressed && fireDelegate != null)
         {
             fireDelegate();
         }
