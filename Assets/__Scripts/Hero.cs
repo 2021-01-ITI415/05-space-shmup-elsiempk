@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UI;
+//using UnityEngine.InputSystem;
+//using UnityEngine.UI;
 
 public class Hero : MonoBehaviour
 {
@@ -21,8 +21,8 @@ public class Hero : MonoBehaviour
     [Header("Set Dynamically")]
     [SerializeField]
     public float _shieldLevel = 1;
-    private float movementX, movementY;
-    private Rigidbody rb;
+    //private float movementX, movementY;
+   // private Rigidbody rb;
 
     // This variable holds a reference to the last triggering GameObject
     private GameObject lastTriggerGo = null;
@@ -37,7 +37,7 @@ public class Hero : MonoBehaviour
         if (S == null) S = this; // Set the Singleton
         else Debug.LogError("Hero.Awake() - Attempted to assign second Hero.S!");
 
-        rb = GetComponent<Rigidbody>();
+       // rb = GetComponent<Rigidbody>();
 
         //fireDelegate += TempFire;
 
@@ -49,7 +49,7 @@ public class Hero : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
+        
         // Pull in information from the Input class
         float xAxis = Input.GetAxis("Horizontal");
         float yAxis = Input.GetAxis("Vertical");
@@ -68,30 +68,30 @@ public class Hero : MonoBehaviour
         {
             fireDelegate();
         }
-        */
-        if (Keyboard.current.spaceKey.isPressed && fireDelegate != null)
-        {
-            fireDelegate();
-        }
+        
+       // if (Keyboard.current.spaceKey.isPressed && fireDelegate != null)
+      //  {
+       //     fireDelegate();
+      //  }
     }
 
-    Vector3 movementVector3;
-    private void FixedUpdate()
-    {
-        movementVector3 = new Vector3(movementX, movementY, 0.0f);
-        rb.velocity = speed * movementVector3;
+   // Vector3 movementVector3;
+   // private void FixedUpdate()
+   // {
+    //    movementVector3 = new Vector3(movementX, movementY, 0.0f);
+    //    rb.velocity = speed * movementVector3;
 
-        float rotationX = movementY * pitchMult;
-        float rotationY = movementX * rollMult;
-        transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
-    }
+     //   float rotationX = movementY * pitchMult;
+     //   float rotationY = movementX * rollMult;
+    //    transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
+    //}
 
-    private void OnMove(InputValue movementValue)
-    {
-        Vector2 movementVector2 = movementValue.Get<Vector2>();
-        movementX = movementVector2.x;
-        movementY = movementVector2.y;
-    }
+  //  private void OnMove(InputValue movementValue)
+  //  {
+   //     Vector2 movementVector2 = movementValue.Get<Vector2>();
+   //     movementX = movementVector2.x;
+   //     movementY = movementVector2.y;
+  //  }
 
     private void OnTriggerEnter(Collider other)
     {
