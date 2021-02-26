@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 //using UnityEngine.InputSystem;
-//using UnityEngine.UI;
+using UnityEngine.UI;
 
 public class Hero : MonoBehaviour
 {
@@ -22,7 +22,8 @@ public class Hero : MonoBehaviour
     [SerializeField]
     public float _shieldLevel = 1;
     //private float movementX, movementY;
-   // private Rigidbody rb;
+    // private Rigidbody rb;
+ 
 
     // This variable holds a reference to the last triggering GameObject
     private GameObject lastTriggerGo = null;
@@ -34,6 +35,8 @@ public class Hero : MonoBehaviour
 
     void Start()
     {
+        
+
         if (S == null) S = this; // Set the Singleton
         else Debug.LogError("Hero.Awake() - Attempted to assign second Hero.S!");
 

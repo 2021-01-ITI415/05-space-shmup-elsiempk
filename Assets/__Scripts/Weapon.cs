@@ -99,6 +99,10 @@ public class Weapon : MonoBehaviour {
         lastShotTime = 0; // You can fire immediately after _type is set.
     }
 
+    [Header("Inspector: Phaser wave")]
+    public static float waveFreq = 2;
+    public static float waveWidth = 4;
+
     public void Fire()
     {
         Debug.Log("Weapon Fired:" + gameObject.name);
@@ -142,6 +146,17 @@ public class Weapon : MonoBehaviour {
                 p.transform.rotation = Quaternion.AngleAxis(5, Vector3.back);
                 p.rigid.velocity = p.transform.rotation * vel;
 
+                break;
+
+            case WeaponType.phaser:
+                p = MakeProjectile();
+                p.rigid.velocity = vel;
+                break;
+
+            case WeaponType.missile:
+                break;
+
+            case WeaponType.laser:
                 break;
         }
     }

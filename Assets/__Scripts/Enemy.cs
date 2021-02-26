@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour {
 
@@ -19,7 +20,9 @@ public class Enemy : MonoBehaviour {
     public float damageDoneTime; // Time to stop showing damage
     public bool notifiedOfDestruction = false; // Will be used later
 
+
     protected BoundsCheck bndCheck;
+
 
     private void Awake()
     {
