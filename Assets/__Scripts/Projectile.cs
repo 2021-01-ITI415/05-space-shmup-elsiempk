@@ -31,11 +31,38 @@ public class Projectile : MonoBehaviour {
         rigid = GetComponent<Rigidbody>();
     }
 
+    private float xnot, initInit;
+    private Vector3 heroPos;
+
+    private void Start()
+    {
+        if(this._type == WeaponType.phaser)
+        {
+            heroPos = Hero.S.transform.position;
+            xnot = heroPos.x;
+            initInit = Time.time;
+        }
+    }
+
+    public float vel;
+
     private void Update()
     {
         if (bndCheck.offUp)
         {
             Destroy(gameObject);
+        }
+
+        if(this._type == WeaponType.phaser)
+        {
+            Vector3 tempPos = heroPos;
+
+            float age = Time.time - initInit;
+            float theta = Mathf.PI * 2 * age / Weapon.waveFreq;
+            float sin = Mathf.Sin(theta);
+
+            tempPos.x = xnot + Weapon.waveWidth * sin;
+            this.rigid.position = tempPos;
         }
     }
 

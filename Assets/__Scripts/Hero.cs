@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
-public class Hero : MonoBehaviour {
+public class Hero : MonoBehaviour
+{
     static public Hero S; // Singleton
 
     [Header("Set in Inspector")]
@@ -18,6 +21,9 @@ public class Hero : MonoBehaviour {
     [Header("Set Dynamically")]
     [SerializeField]
     public float _shieldLevel = 1;
+    //private float movementX, movementY;
+    // private Rigidbody rb;
+ 
 
     // This variable holds a reference to the last triggering GameObject
     private GameObject lastTriggerGo = null;
@@ -27,39 +33,37 @@ public class Hero : MonoBehaviour {
     // Create a WeaponFireDelegate field named fireDelegate.
     public WeaponFireDelegate fireDelegate;
 
-	void Start()
+    void Start()
     {
-        if (S == null)
-        {
-            S = this; // Set the Singleton
-        }
-        else
-        {
-            Debug.LogError("Hero.Awake() - Attempted to assign second Hero.S!");
-        }
+        
+
+        if (S == null) S = this; // Set the Singleton
+        else Debug.LogError("Hero.Awake() - Attempted to assign second Hero.S!");
+
+       // rb = GetComponent<Rigidbody>();
+
         //fireDelegate += TempFire;
 
         // Reset the weapons to start _Hero with 1 blaster
         ClearWeapons();
         weapons[0].SetType(WeaponType.blaster);
     }
-	
-	// Update is called once per frame
-	void Update()
+
+    // Update is called once per frame
+    void Update()
     {
+        
         // Pull in information from the Input class
         float xAxis = Input.GetAxis("Horizontal");
         float yAxis = Input.GetAxis("Vertical");
-
         // Change transform.position based on the axes
         Vector3 pos = transform.position;
         pos.x += xAxis * speed * Time.deltaTime;
         pos.y += yAxis * speed * Time.deltaTime;
         transform.position = pos;
-
         // Rotate the ship to make it feel more dynamic
         transform.rotation = Quaternion.Euler(yAxis * pitchMult, xAxis * rollMult, 0);
-
+        
         // Use the fireDelegate to fire Weapons
         // First, make sure the button is pressed: Axis("Jump")
         // Then ensure that fireDelegate isn't null to avoid an error
@@ -67,7 +71,30 @@ public class Hero : MonoBehaviour {
         {
             fireDelegate();
         }
+        
+       // if (Keyboard.current.spaceKey.isPressed && fireDelegate != null)
+      //  {
+       //     fireDelegate();
+      //  }
     }
+
+   // Vector3 movementVector3;
+   // private void FixedUpdate()
+   // {
+    //    movementVector3 = new Vector3(movementX, movementY, 0.0f);
+    //    rb.velocity = speed * movementVector3;
+
+     //   float rotationX = movementY * pitchMult;
+     //   float rotationY = movementX * rollMult;
+    //    transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
+    //}
+
+  //  private void OnMove(InputValue movementValue)
+  //  {
+   //     Vector2 movementVector2 = movementValue.Get<Vector2>();
+   //     movementX = movementVector2.x;
+   //     movementY = movementVector2.y;
+  //  }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -82,7 +109,7 @@ public class Hero : MonoBehaviour {
         }
         lastTriggerGo = go;
 
-        if(go.tag == "Enemy")
+        if (go.tag == "Enemy")
         {
             shieldLevel--;
             Destroy(go);
@@ -108,10 +135,10 @@ public class Hero : MonoBehaviour {
                 break;
 
             default:
-                if(pu.type == weapons[0].type)
+                if (pu.type == weapons[0].type)
                 {
                     Weapon w = GetEmptyWeaponSlot();
-                    if(w != null)
+                    if (w != null)
                     {
                         // Set it to pu.type
                         w.SetType(pu.type);
@@ -149,7 +176,7 @@ public class Hero : MonoBehaviour {
 
     Weapon GetEmptyWeaponSlot()
     {
-        for (int i=0; i<weapons.Length; i++)
+        for (int i = 0; i < weapons.Length; i++)
         {
             if (weapons[i].type == WeaponType.none)
             {
